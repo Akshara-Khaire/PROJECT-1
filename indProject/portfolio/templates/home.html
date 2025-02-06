@@ -22,7 +22,18 @@
         font-family: "Times New Roman", Times, serif;
     }
 
-    /* Improved Typing Effect */
+    .hero-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+        color: white;
+    }
+
+    /* Typing effect */
     @keyframes typing {
         from { width: 0; }
         to { width: 100%; }
@@ -37,23 +48,30 @@
         display: inline-block;
         overflow: hidden;
         border-right: 3px solid #ffcc00; /* Updated color */
-        
         font-size: 3rem; /* Increased font size */
-        
-        color: 	#68da66; /* White text */
+        color: #68da66; /* White text */
         animation: typing 3.5s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
+        max-width: 90%; /* Make it more responsive */
+        margin: 0 auto;
     }
 
-    /* Centered Hero Section */
-    .hero-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        flex-direction: column;
-        text-align: center;
-        gap: 30px;
-        color: white;
+    /* Media Queries for responsiveness */
+    @media (max-width: 1024px) {
+        .typing-effect {
+            font-size: 2.5rem; /* Reduce font size on tablets and below */
+        }
+    }
+
+    @media (max-width: 768px) {
+        .typing-effect {
+            font-size: 2rem; /* Further reduce font size on smaller screens */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .typing-effect {
+            font-size: 1.5rem; /* Reduce font size even more for mobile devices */
+        }
     }
 
     /* Profile Card */
@@ -176,5 +194,6 @@
         </div>
     </div>
 </div>
+
 
 {% endblock %}
