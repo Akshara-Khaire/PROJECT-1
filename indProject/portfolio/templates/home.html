@@ -5,9 +5,8 @@
     Home - Vijay Rajage
 {% endblock %}
 
-
-
 {% block content %}
+<!-- Navbar -->
 <nav class="navbar">
     <div class="navbar-links">
         <a href="{% url 'home' %}">Home</a>
@@ -17,11 +16,83 @@
 </nav>
 
 <style>
-
-    body{
+    body {
         font-family: "Times New Roman", Times, serif;
+        margin: 0;
+        padding: 0;
     }
 
+    /* Navbar Styling */
+    .navbar {
+        background-color: #111; /* Dark background for the navbar */
+        color: white;
+        padding: 15px 20px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .navbar-links {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .navbar-links a {
+        color: white;
+        text-decoration: none;
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Hover effect for navbar links */
+    .navbar-links a:hover {
+        background-color: transparent; /* Make the background transparent */
+        color: #ffcc00; /* Yellow text color */
+    }
+
+    /* Media Queries for responsiveness */
+    @media (max-width: 1024px) {
+        .navbar-links {
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .navbar-links a {
+            font-size: 1.1rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .navbar-links {
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .navbar-links a {
+            font-size: 1.2rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .navbar-links {
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar-links a {
+            font-size: 1rem;
+            padding: 8px 15px;
+        }
+    }
+
+    /* Hero Section Styling */
     .hero-container {
         display: flex;
         justify-content: center;
@@ -31,6 +102,7 @@
         text-align: center;
         gap: 30px;
         color: white;
+        margin-top: 80px; /* Adjusting for navbar space */
     }
 
     /* Typing effect */
@@ -49,7 +121,7 @@
         overflow: hidden;
         border-right: 3px solid #ffcc00; /* Updated color */
         font-size: 3rem; /* Increased font size */
-        color: #68da66; /* White text */
+        color: #68da66; /* Greenish color */
         animation: typing 3.5s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
         max-width: 90%; /* Make it more responsive */
         margin: 0 auto;
@@ -74,7 +146,7 @@
         }
     }
 
-    /* Profile Card */
+    /* Profile Card Styling */
     .profile-card {
         background: rgba(0, 0, 0, 0.7); /* Darkened background for card */
         backdrop-filter: blur(10px);
@@ -91,7 +163,7 @@
         box-shadow: 0 8px 30px rgba(255, 255, 255, 0.3);
     }
 
-    /* Profile Image */
+    /* Profile Image Styling */
     .profile-img {
         width: 120px;
         height: 120px;
@@ -130,7 +202,8 @@
         text-transform: uppercase;
         border-radius: 8px;
         text-decoration: none;
-        transition: transform 0.3s ease-in-out, background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     }
 
     .btn-primary {
@@ -140,7 +213,7 @@
 
     .btn-primary:hover {
         background: #ff9933;
-        transform: scale(1.1) rotate(-2deg);
+        transform: scale(1.05) rotate(-2deg);
         box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
     }
 
@@ -151,22 +224,11 @@
 
     .btn-secondary:hover {
         background: #0056b3;
-        transform: scale(1.1) rotate(2deg);
+        transform: scale(1.05) rotate(2deg);
         box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
     }
 
-    /* Glowing Hover Effect */
-    .btn-primary, .btn-secondary {
-        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    }
-
-    .btn-primary:hover, .btn-secondary:hover {
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
-    }
-
 </style>
-
-
 
 <!-- Hero Section -->
 <div class="hero-container">
@@ -194,6 +256,5 @@
         </div>
     </div>
 </div>
-
 
 {% endblock %}
