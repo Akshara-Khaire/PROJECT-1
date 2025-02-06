@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    
+
+    <title>{% block title %} My Website {% endblock %}</title>
+</head>
+<body class="dark-mode">
+
+
+
+    <!-- Main Content -->
+    <div class="container">
+        {% block content %}
+            <!-- Navigation Bar -->
+            <div class="navbar">
+                <nav class="text-white flex justify-between items-center">
+                    <span class="text-xl font-bold">🌟 welcome <span class="text-yellow-400">!</span> 🌟</span>
+                </nav>
+            </div>
+        <h1>Welcome to My Website</h1>
+        <p>This is a modern and responsive Django layout.</p>
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 My Website | Built with ❤️ using Django</p>
+    </footer>
+
+</body>
+</html>

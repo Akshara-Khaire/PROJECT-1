@@ -1,12 +1,180 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WELCOME</title>
-</head>
-<body>
-    <h1 style="text-align: center;">HELLO WORLD</h1>
-    <h3 style="text-align: center;">WELCOME TO MY FIRST DJANGO PROJECT</h3>
-</body>
-</html>
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+    Home - Vijay Rajage
+{% endblock %}
+
+
+
+{% block content %}
+<nav class="navbar">
+    <div class="navbar-links">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </div>
+</nav>
+
+<style>
+
+    body{
+        font-family: 'Brush Script MT', cursive;
+    }
+
+    /* Improved Typing Effect */
+    @keyframes typing {
+        from { width: 0; }
+        to { width: 100%; }
+    }
+
+    /* Blinking caret animation */
+    @keyframes blink-caret {
+        50% { border-color: transparent; }
+    }
+
+    .typing-effect {
+        display: inline-block;
+        overflow: hidden;
+        border-right: 3px solid #ffcc00; /* Updated color */
+        white-space: nowrap;
+        font-size: 3rem; /* Increased font size */
+        font-family: "Times New Roman", Times, serif;
+        color: 	#68da66; /* White text */
+        animation: typing 3.5s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
+    }
+
+    /* Centered Hero Section */
+    .hero-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+        color: white;
+    }
+
+    /* Profile Card */
+    .profile-card {
+        background: rgba(0, 0, 0, 0.7); /* Darkened background for card */
+        backdrop-filter: blur(10px);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+        text-align: center;
+        max-width: 600px;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+    .profile-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 30px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Profile Image */
+    .profile-img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.4);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .profile-img:hover {
+        transform: rotate(15deg) scale(1.1);
+    }
+
+    /* Animated Social Icons */
+    .social-icons {
+        margin-top: 15px;
+    }
+
+    .social-icons a {
+        color: #fff;
+        font-size: 2rem;
+        margin: 0 15px;
+        transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
+
+    .social-icons a:hover {
+        transform: translateY(-8px) rotate(10deg);
+        color: #ffcc00; /* Yellow hover color */
+    }
+
+    /* Animated Buttons */
+    .btn {
+        display: inline-block;
+        padding: 15px 30px;
+        font-size: 1.3rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: transform 0.3s ease-in-out, background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+    .btn-primary {
+        background: #ffcc00;
+        color: black;
+    }
+
+    .btn-primary:hover {
+        background: #ff9933;
+        transform: scale(1.1) rotate(-2deg);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-secondary {
+        background: #007bff;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background: #0056b3;
+        transform: scale(1.1) rotate(2deg);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    }
+
+    /* Glowing Hover Effect */
+    .btn-primary, .btn-secondary {
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-primary:hover, .btn-secondary:hover {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+    }
+
+</style>
+
+
+
+<!-- Hero Section -->
+<div class="hero-container">
+    <h1 class="typing-effect">
+        Vijay Rajage | Python Developer | AI & DS Engineer
+    </h1>
+
+    <!-- Profile Card -->
+    <div class="profile-card">
+        <img src="{% static 'images/vijay.png' %}" alt="Vijay Rajage" class="profile-img">
+        <h2 style="font-size: 32px; margin-top: 20px;">Vijay Rajage</h2>
+        <p style="font-size: 22px; color: #dcdcdc;">Python Developer | Django | Data Analyst | AI Enthusiast</p>
+        
+        <!-- Social Links -->
+        <div class="social-icons">
+            <a href="https://github.com/VJ2151" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com/in/vijayrajage" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a>
+        </div>
+
+        <!-- Buttons -->
+        <div style="margin-top: 30px;">
+            <a href="" class="btn btn-primary">🎯 View Project</a>
+            <a href="{% url 'portfolio' %}" class="btn btn-secondary">📁 View Portfolio</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
