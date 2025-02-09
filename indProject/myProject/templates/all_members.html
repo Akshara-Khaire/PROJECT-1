@@ -1,0 +1,174 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+    🚀 Meet Our Members 🚀
+{% endblock %}
+
+{% block content %}
+
+<div class="navbar">
+    <nav class="flex justify-center items-center h-16 w-full bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-lg">
+        <span class="text-2xl font-extrabold text-white animate-text-glow text-center">🌟 MY <span class="text-yellow-400 animate-pulse">PROJECT</span> 🌟</span>
+    </nav>
+</div>
+
+<div class="container py-5">
+    <!-- Animated Page Header -->
+    <h1 class="text-center fancy-header">✨ EMPLOYEES LIST ✨</h1>
+
+    <!-- Members Grid (Flexbox) -->
+    <div class="members-container">
+        {% for x in myMembers %}
+        <div class="member-card">
+            <div class="glow-effect"></div>
+            <div class="image-container">
+                <img class="member-image" src="{{ x.image.url }}" 
+                     alt="{{ x.first_name }} {{ x.last_name }}">
+            </div>
+            <h5 class="member-name">{{ x.first_name|title }} {{ x.last_name|title }}</h5>
+            <p class="member-phone">📞 +91 {{ x.phone }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Custom CSS for a Stunning Look -->
+<style>
+
+    /* Page Header */
+    .fancy-header {
+        font-size: 2.5rem;
+        color: #ffcc00;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-shadow: 0 0 15px rgba(255, 204, 0, 0.9);
+        animation: fadeIn 1.5s ease-in-out, glowText 2s infinite alternate;
+    }
+
+    /* Members Grid */
+    .members-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        padding-top: 20px;
+    }
+
+    /* Member Card - Floating 3D Effect */
+    .member-card {
+        width: 340px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 15px;
+        padding: 25px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(15px);
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+    }
+
+    .member-card:hover {
+        transform: scale(1.08) rotate(1deg);
+        box-shadow: 0 15px 50px rgb(0, 0, 0);
+    }
+
+    /* Pulse Glow Effect */
+    .glow-effect {
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        opacity: 0;
+        transition: opacity 0.4s ease-in-out;
+    }
+
+    .member-card:hover .glow-effect {
+        opacity: 1;
+    }
+
+    /* Image Container - Square with Neon Borders */
+    .image-container {
+        width: 120px;
+        height: 120px;
+        background: linear-gradient(135deg, #ffcc00, #ff6600);
+        padding: 8px;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        animation: glowBorder 3s infinite alternate;
+    }
+
+    /* Member Image */
+    .member-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .member-card:hover .member-image {
+        transform: scale(1.2);
+    }
+
+    /* Member Name */
+    .member-name {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #ffcc00;
+        margin-top: 15px;
+        transition: color 0.3s ease-in-out;
+    }
+
+    .member-card:hover .member-name {
+        color: #ffffff; /* Turns white on hover */
+    }
+
+    /* Member Phone */
+    .member-phone {
+        font-size: 1rem;
+        color: #90ee90;
+        margin-top: 8px;
+        transition: color 0.3s ease-in-out;
+    }
+
+    .member-card:hover .member-phone {
+        color: #ffffff; /* Turns white on hover */
+    }
+
+    /* Responsive Layout */
+    @media (max-width: 1024px) { /* Medium screens: 2 per row */
+        .member-card {
+            width: 48%;
+        }
+    }
+
+    @media (max-width: 768px) { /* Small screens: 1 per row */
+        .member-card {
+            width: 100%;
+        }
+    }
+
+    /* Keyframe Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes glowText {
+        from { text-shadow: 0 0 5px #ffcc00; }
+        to { text-shadow: 0 0 20px #ffcc00, 0 0 40px #ffcc00; }
+    }
+
+    @keyframes glowBorder {
+        from { box-shadow: 0 0 15px rgba(255, 204, 0, 0.6); }
+        to { box-shadow: 0 0 30px rgba(255, 102, 0, 0.9); }
+    }
+</style>
+
+{% endblock %}
