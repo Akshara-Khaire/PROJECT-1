@@ -16,10 +16,17 @@
 </nav>
 
 <style>
+    /* Basic Reset and Body Styling */
+    * {
+        box-sizing: border-box; /* Common practice for easier layout management */
+    }
+
     body {
         font-family: "Times New Roman", Times, serif;
         margin: 0;
         padding: 0;
+        background-color: #1a1a1a; /* Added a default dark background for the page */
+        color: white; /* Default text color for better readability on dark background */
     }
 
     /* Navbar Styling */
@@ -37,8 +44,10 @@
 
     .navbar-links {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-between; /* On wider screens, links will be spaced out */
         align-items: center;
+        max-width: 1200px; /* Optional: constrain navbar content width on very wide screens */
+        margin: 0 auto; /* Center content if max-width is applied */
     }
 
     .navbar-links a {
@@ -55,52 +64,20 @@
         color: #ffcc00; /* Yellow text color */
     }
 
-    /* Media Queries for responsiveness */
-    @media (max-width: 1024px) {
-        .navbar-links {
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .navbar-links a {
-            font-size: 1.1rem;
-        }
-    }
-
-    @media (max-width: 768px) {
-        .navbar-links {
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .navbar-links a {
-            font-size: 0.8rem;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .navbar-links {
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .navbar-links a {
-            font-size: 0.5rem;
-            padding: 8px 15px;
-        }
-    }
-
     /* Hero Section Styling */
     .hero-container {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        min-height: 100vh; /* Use min-height to ensure it takes at least full viewport height */
         flex-direction: column;
         text-align: center;
         gap: 30px;
         color: white;
-        margin-top: 80px; /* Adjusting for navbar space */
+        padding-top: 80px; /* Adjusting for navbar space, use padding instead of margin for container background */
+        padding-bottom: 40px; /* Add some padding at the bottom */
+        padding-left: 20px; /* Add horizontal padding for content */
+        padding-right: 20px; /* Add horizontal padding for content */
     }
 
     /* Typing effect */
@@ -121,27 +98,10 @@
         font-size: 3rem; /* Increased font size */
         color: #68da66; /* Greenish color */
         animation: typing 3.5s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
-        max-width: 90%; /* Make it more responsive */
+        max-width: 100%; /* Changed from 90% to 100% to allow text to fill its container */
+        white-space: nowrap; /* Prevent wrapping during animation, text might get long */
         margin: 0 auto;
-    }
-
-    /* Media Queries for responsiveness */
-    @media (max-width: 1024px) {
-        .typing-effect {
-            font-size: 2.5rem; /* Reduce font size on tablets and below */
-        }
-    }
-
-    @media (max-width: 768px) {
-        .typing-effect {
-            font-size: 2rem; /* Further reduce font size on smaller screens */
-        }
-    }
-
-    @media (max-width: 480px) {
-        .typing-effect {
-            font-size: 1.5rem; /* Reduce font size even more for mobile devices */
-        }
+        /* The text itself might need to break lines on smaller screens after animation, or font size reduced more aggressively */
     }
 
     /* Profile Card Styling */
@@ -153,6 +113,7 @@
         box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
         text-align: center;
         max-width: 600px;
+        width: 100%; /* Make card responsive within its max-width */
         transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     }
 
@@ -168,11 +129,24 @@
         border-radius: 50%;
         box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.4);
         transition: transform 0.3s ease-in-out;
+        object-fit: cover; /* Ensure image covers the area without distortion */
     }
 
     .profile-img:hover {
         transform: rotate(15deg) scale(1.1);
     }
+
+    /* Targeting h2 and p inside profile-card for better CSS management than inline styles */
+    .profile-card h2 {
+        font-size: 32px; /* Base size from inline style */
+        margin-top: 20px; /* Base margin from inline style */
+        color: white; /* Ensuring it's white */
+    }
+    .profile-card p {
+        font-size: 22px; /* Base size from inline style */
+        color: #dcdcdc; /* Base color from inline style */
+    }
+
 
     /* Animated Social Icons */
     .social-icons {
@@ -202,6 +176,7 @@
         text-decoration: none;
         transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
         box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        margin: 5px; /* Add some margin for spacing when buttons wrap */
     }
 
     .btn-primary {
@@ -224,6 +199,161 @@
         background: #0056b3;
         transform: scale(1.05) rotate(2deg);
         box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    }
+
+
+    /* Media Queries for responsiveness */
+    @media (max-width: 1024px) {
+        .navbar-links {
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .navbar-links a {
+            font-size: 1.1rem;
+            padding: 10px 15px; /* Adjust padding */
+        }
+
+        .typing-effect {
+            font-size: 2.5rem; /* Reduce font size on tablets and below */
+            white-space: normal; /* Allow wrapping after animation if needed */
+            border-right: none; /* Hide cursor after animation for wrapped text */
+            animation: typing 3.5s steps(40, end) forwards; /* Remove blink if border is none */
+
+        }
+        /* Re-add blink if you want it, but it looks odd on wrapped text */
+        @keyframes blink-caret-1024 { 50% { border-color: transparent; } }
+        .typing-effect {
+            /* If keeping border for wrapped text, ensure it makes sense */
+            /* border-right: 3px solid #ffcc00; */
+            /* animation: typing 3.5s steps(40, end) forwards, blink-caret-1024 0.75s step-end infinite; */
+        }
+
+
+        .profile-card {
+            padding: 30px;
+            max-width: 90%;
+        }
+        .profile-card h2 {
+            font-size: 28px;
+        }
+        .profile-card p {
+            font-size: 18px;
+        }
+        .profile-img {
+            width: 100px;
+            height: 100px;
+        }
+        .social-icons a {
+            font-size: 1.8rem;
+            margin: 0 12px;
+        }
+        .btn {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .navbar {
+            padding: 10px 15px;
+        }
+        .navbar-links {
+            /* justify-content: center; /* Already set */
+            gap: 15px;
+        }
+        .navbar-links a {
+            font-size: 1rem; /* Adjusted from 0.8rem for better readability */
+            padding: 8px 12px;
+        }
+
+        .hero-container {
+            gap: 20px;
+            padding-top: 70px; /* Adjust if navbar height effectively changes */
+        }
+
+        .typing-effect {
+            font-size: 1.8rem; /* Further reduce font size on smaller screens */
+        }
+
+        .profile-card {
+            padding: 25px;
+        }
+        .profile-card h2 {
+            font-size: 24px;
+        }
+        .profile-card p {
+            font-size: 16px;
+        }
+        .profile-img {
+            width: 90px;
+            height: 90px;
+        }
+        .social-icons {
+            margin-top: 10px;
+        }
+        .social-icons a {
+            font-size: 1.6rem;
+            margin: 0 10px;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+        }
+        /* Ensure buttons stack nicely if they don't fit side-by-side */
+        .profile-card div[style*="margin-top: 30px;"] { /* Targeting the button container */
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .navbar-links {
+            /* justify-content: center; /* Already set */
+            gap: 10px; /* Adjusted from 8px */
+        }
+
+        .navbar-links a {
+            font-size: 0.9rem; /* Adjusted from 0.5rem for better readability */
+            padding: 8px 10px; /* Adjusted from 8px 15px */
+        }
+
+        .hero-container {
+            padding-top: 65px; /* Adjust if navbar height effectively changes */
+        }
+
+        .typing-effect {
+            font-size: 1.3rem; /* Reduce font size even more for mobile devices */
+            line-height: 1.4; /* Improve readability for multi-line text */
+        }
+
+        .profile-card {
+            padding: 20px;
+            max-width: 95%;
+        }
+        .profile-card h2 {
+            font-size: 20px;
+        }
+        .profile-card p {
+            font-size: 14px;
+        }
+        .profile-img {
+            width: 80px;
+            height: 80px;
+        }
+        .social-icons a {
+            font-size: 1.5rem;
+            margin: 0 8px;
+        }
+        .btn {
+            padding: 10px 18px;
+            font-size: 0.9rem;
+            width: 100%; /* Make buttons full width in their container */
+            max-width: 250px; /* Optional: constrain button width */
+        }
+         /* Button container is already flex-column from 768px MQ */
     }
 
 </style>

@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    Portfolio - Vijay Rajage
+Portfolio - Vijay Rajage
 {% endblock %}
 
 {% block content %}
@@ -13,6 +13,8 @@
         margin: 0;
         padding-top: 0; /* Remove extra top padding */
         font-family: "Times New Roman", Times, serif;
+        color: #e1e1e1; /* Added a default text color for better readability on darkish backgrounds */
+        background-color: #121212; /* Added a default background for consistent look */
     }
     
 
@@ -22,7 +24,7 @@
         padding: 15px 30px; /* Adjust spacing */
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: space-between; /* This will push nav to one side if there were other elements */
         background-color: rgba(0, 0, 0, 0.8); /* Ensure same background */
         backdrop-filter: blur(10px);
         position: fixed; /* Keep it fixed at the top */
@@ -43,7 +45,7 @@
     }
 
     /* Smooth Hover Effect */
-    .navbar nav:hover {
+    .navbar nav:hover { /* This targets the <nav> element inside .navbar */
         transform: scale(1.1);
         transition: transform 0.3s ease-in-out;
     }
@@ -53,12 +55,14 @@
         white-space: nowrap;
     }
 
-    .navbar nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    .navbar nav { /* This targets the <nav> element specifically */
+        display: flex; /* Already has flex from Tailwind, this is redundant but harmless */
+        justify-content: space-between; /* If nav had multiple children, this would apply */
+        align-items: center; /* Already has align-items from Tailwind */
+        width: 100%; /* Ensure the nav takes full width of the .navbar if needed */
     }
 
+    /* This rule for .navbar a might not be used if your navbar title is a span, as in your HTML */
     .navbar a {
         font-size: 1.2rem;
         font-weight: 600;
@@ -71,7 +75,7 @@
         color: #ff5733;
     }
 
-    /* Navbar items styling */
+    /* Navbar items styling - not currently used in your navbar HTML structure but kept as per instruction */
     .nav-items {
         display: flex;
         gap: 20px;
@@ -79,12 +83,16 @@
 
     /* Adjusting Header Section Below Navbar */
     .header {
-        margin-top: 0;
-        padding-top: 50px;
+        margin-top: 0; /* Original: margin-top: 0; */
+        /* Original padding-top: 50px; Changed to account for fixed 60px navbar height + 50px desired content spacing */
+        padding-top: 110px; /* 60px (navbar height) + 50px (original content spacing intention) */
         background-color: rgba(0, 0, 0, 0.5);
         color: white;
         text-align: center;
         {% comment %} padding: 120px 20px; /* Padding top is adjusted to compensate for the navbar */ {% endcomment %}
+        padding-bottom: 50px; /* Added some bottom padding for balance */
+        padding-left: 20px; /* Added for consistency */
+        padding-right: 20px; /* Added for consistency */
         margin-bottom: 50px;
         animation: fadeIn 2s ease-in-out;
         display: flex;
@@ -142,6 +150,10 @@
         animation: fadeIn 2s ease-in-out;
         border-bottom: 2px solid #ff5733;
     }
+    .section:last-of-type { /* Remove border from last section */
+        border-bottom: none;
+    }
+
 
     .section h2 {
         font-size: 3rem;
@@ -153,12 +165,19 @@
         -webkit-text-fill-color: transparent;
     }
 
-    .contact-info p, .skills-list p {
+    .contact-info p, .skills-list p { /* .skills-list p might not be directly styled this way if skills are in <li> */
         font-size: 1.2rem;
+        color: #e1e1e1; /* Ensure text color consistency */
+    }
+    .skills-list li { /* Style list items in skills for consistency */
+        font-size: 1.1rem; /* Match card p font-size for consistency */
+        line-height: 1.6;
+        color: #e1e1e1;
     }
 
+
     .contact-info a {
-        color: #4CAF50;
+        color: #4CAF50; /* This specific color is for general 'a' inside contact-info */
         text-decoration: none;
         text-align:center;
     }
@@ -195,8 +214,11 @@
         color: #e1e1e1;
         text-align: left;
     }
+    .card ul li { /* Ensuring card list items also have the intended color */
+        color: #e1e1e1;
+    }
 
-    /* Button Hover Effects */
+    /* Button Hover Effects - not currently used in your HTML structure but kept */
     .button-hover {
         background-color: #4CAF50;
         color: white;
@@ -227,10 +249,10 @@
     }
 
     /* Contact Links Styling */
-    .contact-links a {
+    .contact-links a { /* This styles the specific GitHub/LinkedIn links */
         margin: 0 20px;
         font-size: 1.3rem;
-        color: #fff;
+        color: #fff; /* White color for these specific links */
         font-weight: bold;
         text-decoration: none;
         transition: color 0.3s ease;
@@ -266,8 +288,8 @@
         scroll-behavior: smooth;
     }
 
-    /* Adding Icons for GitHub and LinkedIn */
-    .icon-links {
+    /* Adding Icons for GitHub and LinkedIn - These are part of .contact-links a i {} rule now */
+    .icon-links { /* This class is not used in the HTML, styles are covered by .contact-links i */
         font-size: 2rem;
         display: flex;
         justify-content: center;
@@ -297,15 +319,148 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         cursor: pointer;
         transition: all 0.3s ease-in-out;
+        z-index: 1001; /* Ensure it's above other content if needed */
     }
     
     .back-button:hover {
         transform: scale(1.1);
         background: linear-gradient(45deg, #feb47b, #ff7e5f);
     }
+
+    /* ----------------------------------------- */
+    /* ----- ADDED CSS FOR RESPONSIVENESS ----- */
+    /* ----------------------------------------- */
+
+    /* For tablets and larger mobile phones */
+    @media (max-width: 768px) {
+        .navbar {
+            padding: 15px 20px; /* Reduced horizontal padding */
+        }
+        /* Target the span within .navbar nav for title font size, as it has Tailwind's text-2xl */
+        .navbar nav span {
+            font-size: 1.25rem !important; /* Override Tailwind's text-2xl if needed, using !important if necessary */
+        }
+
+        .header {
+            padding-top: 100px; /* Adjusted for 60px navbar + 40px content spacing */
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .header h1 {
+            font-size: 3rem;
+        }
+        .header p {
+            font-size: 1.4rem;
+        }
+        .header img {
+            width: 150px;
+            height: 150px;
+        }
+
+        .section {
+            padding: 50px 15px;
+        }
+        .section h2 {
+            font-size: 2.5rem;
+        }
+
+        .card {
+            padding: 20px;
+        }
+        .card h3 {
+            font-size: 1.6rem;
+        }
+        .card p, .skills-list li, .card ul li {
+            font-size: 1rem;
+        }
+
+        .contact-links {
+            flex-direction: column; /* Stack links vertically */
+            align-items: center;
+            gap: 15px;
+        }
+        .contact-links a {
+            margin: 5px 0; /* Adjust margin for stacked layout */
+            font-size: 1.2rem;
+        }
+    }
+
+    /* For smaller mobile phones */
+    @media (max-width: 480px) {
+        body {
+            font-size: 14px; /* Adjust base font size for small screens */
+        }
+        .navbar {
+            height: 55px; /* Slightly shorter navbar */
+            padding: 10px 15px;
+        }
+        .navbar nav span {
+            font-size: 1.1rem !important; /* Further reduce title font size */
+        }
+
+        .header {
+             /* Adjusted for 55px navbar (new height) + 30px content spacing */
+            padding-top: calc(55px + 30px); /* 85px */
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 2.2rem;
+        }
+        .header p {
+            font-size: 1.1rem; /* Reduced paragraph font size */
+            margin-top: 8px;
+        }
+        .header img {
+            width: 120px;
+            height: 120px;
+            border-width: 3px;
+            margin-bottom: 15px;
+        }
+
+        .section {
+            padding: 40px 10px;
+        }
+        .section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .card h3 {
+            font-size: 1.4rem;
+        }
+        .card p, .skills-list li, .card ul li {
+            font-size: 0.95rem; /* Slightly smaller text in cards */
+        }
+        
+        ul {
+            padding-left: 18px; /* Slightly reduce bullet indent */
+        }
+        li {
+            margin-bottom: 8px;
+        }
+
+        .contact-links a {
+            font-size: 1.1rem;
+        }
+        .contact-links i {
+            font-size: 1.4rem;
+        }
+
+        .back-button {
+            padding: 10px 15px;
+            font-size: 14px;
+            bottom: 15px;
+            right: 15px;
+        }
+    }
     
 </style>
-
 
 <div class="navbar">
     <nav class="flex justify-center items-center h-16 w-full bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-lg">
@@ -313,9 +468,8 @@
     </nav>
 </div>
 
-
-
 <!-- Header Section -->
+
 <div class="header">
     <img src="{% static 'images/apsaraa.jpg' %}" alt="Akshara Khaire">
     <h1>Akshara Ravindra Khaire</h1>
@@ -324,6 +478,7 @@
 </div>
 
 <!-- Contact Information -->
+
 <div class="section contact-info">
     <h2>Contact Information 📩</h2>
     <div class="flex justify-center gap-10 contact-links">
@@ -337,6 +492,7 @@
 </div>
 
 <!-- Certification Section -->
+
 <div class="section">
     <h2>Certification 🎓</h2>
     <div class="card">
@@ -351,6 +507,7 @@
 </div>
 
 <!-- Skills Section -->
+
 <div class="section skills-list">
     <h2>Skills 🛠️</h2>
     <div class="card">
@@ -364,6 +521,7 @@
 </div>
 
 <!-- Education Section -->
+
 <div class="section">
     <h2>Education 🎓</h2>
     <div class="card">
@@ -373,6 +531,7 @@
 </div>
 
 <!-- Academic Projects Section -->
+
 <div class="section">
     <h2>Academic Projects 💻</h2>
     <div class="card">
@@ -424,11 +583,13 @@
 </div>
 
 <!-- Fixed Back Button -->
+
 <button onclick="goBack()" class="back-button">
     ⬅️ Back
 </button>
 
 <!-- JavaScript for Back Navigation -->
+
 <script>
     function goBack() {
         window.history.back();

@@ -8,115 +8,236 @@
 {% block content %}
 
 <div class="navbar">
-    <nav class="navbar-inner">
-        <span class="navbar-title">📈 <span class="highlight">POWER BI</span> PROJECTS 📉</span>
+    <nav class="flex justify-center items-center h-16 w-full bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-lg">
+        <span class="text-2xl font-extrabold text-white animate-text-glow text-center">📈 <span class="text-yellow-400 animate-pulse">POWER BI</span> PROJECTS 📉</span>
     </nav>
 </div>
 
-<div class="container">
-    <h1 class="fancy-header">✨ My Dashboard Projects ✨</h1>
+<div class="container py-10">
+    <h1 class="text-center fancy-header">✨ My Dashboard Projects ✨</h1>
 
     <!-- Project Buttons -->
-    <div class="project-buttons">
+    <div class="flex flex-wrap justify-center gap-6 mt-8">
         <button onclick="showProject(0)" class="project-button">E-Commerce Sales Data</button>
         <button onclick="showProject(1)" class="project-button">IT Spend Analysis</button>
         <button onclick="showProject(2)" class="project-button">Credit Card Analysis</button>
     </div>
 
     <!-- Project Detail Section -->
-    <div id="projectDetails" class="project-details hidden">
-        <h2 id="projectTitle" class="project-title"></h2>
-        <p id="projectDesc" class="project-desc"></p>
-        <div id="projectImages" class="project-images"></div>
+    <div id="projectDetails" class="mt-10 hidden bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+        <h2 id="projectTitle" class="text-2xl font-bold text-gray-800 dark:text-yellow-300 mb-4"></h2>
+        <p id="projectDesc" class="text-gray-700 dark:text-gray-200 mb-6"></p>
+        <div id="projectImages" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
     </div>
 </div>
 
-<!-- Back Button -->
-<button onclick="goBack()" class="back-button">⬅️ Back</button>
-
-<!-- Styles -->
 <style>
-    /* Reset & base */
-    * {
-        margin: 0;
-        padding: 0;
+    /* CSS Custom Properties (Variables) */
+    :root {
+        --color-gray-100: #f7fafc;
+        --color-gray-200: #e2e8f0;
+        --color-gray-700: #4a5568;
+        --color-gray-800: #2d3748;
+        --color-gray-900: #1a202c;
+        --color-yellow-300: #fcd34d;
+        --color-yellow-400: #facc15;
+        --color-white: #ffffff;
+        --color-black: #000000;
+        --color-sky-500: #0ea5e9; /* For fancy-header, approx #38bdf8 */
+        --color-green-400: #4ade80;
+        --color-cyan-400: #22d3ee;
+
+
+        --font-size-base: 1rem; /* 16px */
+        --font-size-2xl: 1.5rem; /* 24px */
+        --font-weight-bold: 700;
+        --font-weight-extrabold: 800;
+
+        --spacing-1: 0.25rem; /* 4px */
+        --spacing-4: 1rem;   /* 16px */
+        --spacing-6: 1.5rem;  /* 24px */
+        --spacing-8: 2rem;   /* 32px */
+        --spacing-10: 2.5rem; /* 40px */
+        --spacing-16: 4rem;  /* 64px */
+
+        --border-radius-xl: 0.75rem; /* 12px */
+        --border-radius-lg: 0.5rem; /* 8px, for project-button */
+        --border-radius-button: 10px; /* As per .project-button */
+
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+        --breakpoint-md: 768px; /* Tailwind's 'md' breakpoint */
+
+        /* Default gradient stops (can be overridden by from-/via-/to- classes) */
+        --tw-gradient-from: initial;
+        --tw-gradient-to: initial;
+        --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    }
+
+    /* Basic Reset and Body Styles */
+    *, *::before, *::after {
         box-sizing: border-box;
     }
 
     body {
-        font-family: Arial, sans-serif;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        margin: 0;
+        background-color: var(--color-white);
+        color: var(--color-gray-900); /* Default text color for light mode */
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
-    .hidden {
-        display: none;
-    }
+    /* --- PURE CSS REIMPLEMENTATION OF TAILWIND UTILITIES USED --- */
 
-    /* Navbar */
-    .navbar-inner {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 60px;
-        background: linear-gradient(to right, #1f2937, #111827);
-        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    }
+    /* Display & Layout */
+    .flex { display: flex; }
+    .grid { display: grid; }
+    .hidden { display: none; }
 
-    .navbar-title {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: white;
-        text-align: center;
-    }
+    /* Flexbox */
+    .justify-center { justify-content: center; }
+    .items-center { align-items: center; }
+    .flex-wrap { flex-wrap: wrap; }
 
-    .highlight {
-        color: #facc15;
-        animation: pulse 2s infinite;
-    }
+    /* Grid */
+    .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
 
-    @keyframes pulse {
-        0% { opacity: 1; }
-        50% { opacity: 0.6; }
-        100% { opacity: 1; }
-    }
+    /* Sizing */
+    .w-full { width: 100%; }
+    .h-16 { height: var(--spacing-16); } /* 4rem */
+    .h-auto { height: auto; }
+    .max-w-full { max-width: 100%; }
 
     /* Container */
     .container {
-        padding: 40px 20px;
-        max-width: 1000px;
-        margin: auto;
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+        padding-left: var(--spacing-4); /* Default padding */
+        padding-right: var(--spacing-4);
+    }
+    @media (min-width: 640px) { .container { max-width: 640px; } }
+    @media (min-width: 768px) { .container { max-width: 768px; } }
+    @media (min-width: 1024px) { .container { max-width: 1024px; } }
+    @media (min-width: 1280px) { .container { max-width: 1280px; } }
+
+
+    /* Spacing (Padding, Margin, Gap) */
+    .py-10 { padding-top: var(--spacing-10); padding-bottom: var(--spacing-10); } /* 2.5rem */
+    .p-6 { padding: var(--spacing-6); } /* 1.5rem */
+    .mt-8 { margin-top: var(--spacing-8); } /* 2rem */
+    .mt-10 { margin-top: var(--spacing-10); } /* 2.5rem */
+    .mb-4 { margin-bottom: var(--spacing-4); } /* 1rem */
+    .mb-6 { margin-bottom: var(--spacing-6); } /* 1.5rem */
+    .gap-4 { gap: var(--spacing-4); } /* 1rem */
+    .gap-6 { gap: var(--spacing-6); } /* 1.5rem */
+
+    /* Typography */
+    .text-center { text-align: center; }
+    .text-2xl { font-size: var(--font-size-2xl); } /* 1.5rem */
+    .font-bold { font-weight: var(--font-weight-bold); }
+    .font-extrabold { font-weight: var(--font-weight-extrabold); }
+    .text-white { color: var(--color-white); }
+    .text-yellow-400 { color: var(--color-yellow-400); }
+    .text-gray-100 { color: var(--color-gray-100); } /* For dark mode text on dark bg */
+    .text-gray-200 { color: var(--color-gray-200); }
+    .text-gray-700 { color: var(--color-gray-700); }
+    .text-gray-800 { color: var(--color-gray-800); }
+    .text-yellow-300 { color: var(--color-yellow-300); }
+
+
+    /* Backgrounds */
+    .bg-gray-100 { background-color: var(--color-gray-100); }
+    
+    /* Gradient Backgrounds - Tailwind's CSS variable approach */
+    .from-gray-900 {
+        --tw-gradient-from: var(--color-gray-900);
+        --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(26,32,44,0)); /* gray-900 transparent fallback */
+    }
+    .via-gray-800 {
+        /* This sets the middle stop. If 'to' is not defined, this effectively becomes the 'to' */
+        --tw-gradient-stops: var(--tw-gradient-from), var(--color-gray-800), var(--tw-gradient-to, rgba(45,55,72,0)); /* gray-800 transparent fallback */
+    }
+    .to-gray-900 {
+        --tw-gradient-to: var(--color-gray-900);
+    }
+    .bg-gradient-to-r {
+        background-image: linear-gradient(to right, var(--tw-gradient-stops));
     }
 
+    /* Borders */
+    .rounded-xl { border-radius: var(--border-radius-xl); } /* 0.75rem */
+
+    /* Shadows */
+    .shadow-md { box-shadow: var(--shadow-md); }
+    .shadow-lg { box-shadow: var(--shadow-lg); }
+
+    /* Object Fit */
+    .object-contain { object-fit: contain; }
+
+    /* Animations */
+    .animate-text-glow { animation: text-glow 2s ease-in-out infinite alternate; }
+    .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+
+    /* --- RESPONSIVE VARIANTS (md: prefix) --- */
+    @media (min-width: 768px) { /* Corresponds to Tailwind's 'md' breakpoint */
+        .md\:grid-cols-2 { /* Note: class name is 'md:grid-cols-2', colon needs escaping in CSS selector */
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    /* --- DARK MODE VARIANTS (dark: prefix) --- */
+    @media (prefers-color-scheme: dark) {
+        body {
+            background-color: var(--color-gray-900); /* Dark background for body */
+            color: var(--color-gray-200); /* Lighter default text for dark mode */
+        }
+
+        /* Example of how dark: variants would be applied */
+        .dark\:bg-gray-800 { background-color: var(--color-gray-800); }
+        .dark\:text-yellow-300 { color: var(--color-yellow-300); }
+        .dark\:text-gray-200 { color: var(--color-gray-200); }
+
+        /* Update existing custom components for dark mode if needed */
+        .fancy-header {
+            color: var(--color-sky-500); /* Keep bright or adjust as needed */
+            text-shadow: 0 0 15px rgba(14, 165, 233, 0.8);
+        }
+        .project-button {
+             /* The gradient might be fine, or adjust for contrast */
+        }
+        .back-button { /* Ensure back button is visible on dark bg */
+            background: linear-gradient(45deg,rgb(55, 65, 81),rgb(31, 41, 55)); /* Darker gradient for button */
+            color: var(--color-white);
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+        }
+        .back-button:hover {
+            background: linear-gradient(45deg, #ffac70, #ff6842); /* Brighter hover for dark mode */
+            color: var(--color-black);
+        }
+    }
+
+
+    /* --- YOUR EXISTING CUSTOM STYLES --- */
     .fancy-header {
-        font-size: 2rem;
-        color: #38bdf8;
+        font-size: 2.3rem;
+        color: var(--color-sky-500); /* Using variable for consistency */
         font-weight: bold;
-        text-align: center;
-        margin-bottom: 30px;
-        text-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
+        text-shadow: 0 0 15px rgba(56, 189, 248, 0.8); /* Original: rgba(56, 189, 248, 0.8) */
         animation: fadeIn 1.5s ease-in-out;
     }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Buttons */
-    .project-buttons {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
-    }
-
     .project-button {
-        background: linear-gradient(to right, #4ade80, #22d3ee);
+        background: linear-gradient(to right, var(--color-green-400), var(--color-cyan-400));
         color: white;
         font-weight: bold;
         padding: 0.8rem 1.5rem;
-        border-radius: 10px;
-        border: none;
-        cursor: pointer;
+        border-radius: var(--border-radius-button);
+        border: none; /* Added for consistency */
+        cursor: pointer; /* Added for better UX */
         transition: all 0.3s ease;
         box-shadow: 0 4px 14px rgba(0,0,0,0.3);
     }
@@ -126,47 +247,59 @@
         box-shadow: 0 6px 20px rgba(0,0,0,0.4);
     }
 
-    /* Project Details */
-    .project-details {
-        background-color: #f3f4f6;
-        margin-top: 40px;
-        padding: 20px;
-        border-radius: 15px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    /* Keyframe Animations (existing and new) */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
-    .project-title {
-        font-size: 1.6rem;
-        font-weight: bold;
-        color: #1f2937;
-        margin-bottom: 10px;
+    @keyframes text-glow { /* For navbar title */
+        0%, 100% {
+            text-shadow: 0 0 5px rgba(255,255,255,0.7),
+                         0 0 10px rgba(255,255,255,0.5),
+                         0 0 15px var(--color-yellow-400),
+                         0 0 20px var(--color-yellow-400);
+        }
+        50% {
+            text-shadow: 0 0 8px rgba(255,255,255,0.8),
+                         0 0 15px var(--color-yellow-400),
+                         0 0 20px var(--color-yellow-400),
+                         0 0 25px var(--color-yellow-400);
+        }
     }
 
-    .project-desc {
-        color: #374151;
-        margin-bottom: 20px;
+    @keyframes pulse { /* For "POWER BI" highlight */
+        0%, 100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+        50% {
+            opacity: 0.8;
+            transform: scale(1.03);
+        }
     }
 
-    .project-images {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 15px;
+    /* Button Hover Effects (unused in HTML, but kept as requested) */
+    .button-hover {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        font-size: 1.2rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
     }
 
-    .project-images img {
-        width: 100%;
-        height: auto;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        object-fit: contain;
+    .button-hover:hover {
+        background-color: #45a049;
+        transform: scale(1.05); /* Slight button scale on hover */
     }
 
-    /* Back Button */
     .back-button {
         position: fixed;
         bottom: 20px;
         right: 20px;
-        background: white;
+        background: linear-gradient(45deg,rgb(240, 240, 240),rgb(220, 220, 220)); /* Slightly adjusted for better visibility */
         color: black;
         font-size: 16px;
         font-weight: bold;
@@ -176,41 +309,30 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         cursor: pointer;
         transition: all 0.3s ease-in-out;
+        z-index: 1000; /* Ensure it's on top */
     }
-
+    
     .back-button:hover {
         transform: scale(1.1);
         background: linear-gradient(45deg, #feb47b, #ff7e5f);
+        color: var(--color-white); /* Ensure text is visible on hover */
     }
 
-    /* Responsive Design */
-    @media (max-width: 768px) {
-        .fancy-header {
-            font-size: 1.6rem;
-        }
-
-        .project-button {
-            width: 100%;
-            font-size: 0.95rem;
-        }
-
-        .project-images {
-            grid-template-columns: 1fr;
-        }
-
-        .back-button {
-            font-size: 14px;
-            padding: 10px 14px;
-        }
+    /* Additional styling for dynamically added images for consistency */
+    #projectImages img {
+        display: block; /* Removes extra space below image if it's inline */
+        max-width: 100%; /* Already part of .max-w-full */
+        height: auto; /* Already part of .h-auto */
+        /* border-radius and shadow will be applied by the classes added in JS */
     }
+
 </style>
 
-<!-- JavaScript -->
 <script>
     const projectData = [
         {
             title: "E-Commerce Sales Data",
-            desc: `Developed an interactive E-Commerce Sales Dashboard using Power BI and Power Query...`,
+            desc: `Developed an interactive E-Commerce Sales Dashboard using Power BI and Power Query, enabling dynamic filtering by country, region, state, ship mode, and order date for in-depth analysis. Integrated various KPIs including total products, orders, customers, quantity, sales, and profit, offering a comprehensive snapshot of business performance. Implemented visualizations such as field maps, line charts, bar graphs, doughnut charts, and gauges to display key metrics like sales vs target, sales by segment, and profit by state, along with a dedicated sales forecast view.`,
             images: [
                 "/media/images/ecommerce1.png",
                 "/media/images/ecommerce2.png"
@@ -218,7 +340,7 @@
         },
         {
             title: "IT Spend Analysis",
-            desc: `Developed an interactive Power BI dashboard to visualize Actual vs. Plan IT spend by IT Area...`,
+            desc: `Developed an interactive Power BI dashboard to visualize Actual vs. Plan IT spend by IT Area, enabling stakeholders to track budget alignment across multiple departments. Integrated dynamic map visualizations that update based on selected Sales Regions, allowing for granular country-wise variance analysis in real time. Created period-over-period trend analysis across Business Areas using line and stacked area charts to identify spend patterns and anomalies over 12 months.`,
             images: [
                 "/media/images/it_spend1.png",
                 "/media/images/it_spend2.png"
@@ -226,7 +348,7 @@
         },
         {
             title: "Credit Card Analysis",
-            desc: `Created dynamic dashboards for Credit Card Transaction and Customer Reports using Power BI...`,
+            desc: `Created dynamic dashboards for Credit Card Transaction and Customer Reports using Power BI, featuring revenue trends, interest earnings, transaction counts, and customer insights. Utilized DAX to build custom calculations for age group segmentation, week-over-week revenue analysis, and other KPIs. Integrated slicers for week start date, card category, income group, and gender, allowing users to explore data across dimensions. Analyzed revenue distribution by education level, marital status, dependent count, and state.`,
             images: [
                 "/media/images/credit_card1.png",
                 "/media/images/credit_card2.png"
@@ -236,22 +358,31 @@
 
     function showProject(index) {
         const details = document.getElementById("projectDetails");
-        details.classList.remove("hidden");
+        details.classList.remove("hidden"); // This will now work as .hidden is display:none
 
         document.getElementById("projectTitle").textContent = projectData[index].title;
         document.getElementById("projectDesc").textContent = projectData[index].desc;
 
         const imgContainer = document.getElementById("projectImages");
-        imgContainer.innerHTML = "";
+        imgContainer.innerHTML = ""; // Clear previous images
 
-        projectData[index].images.forEach(img => {
+        projectData[index].images.forEach(imgSrc => {
             const imgTag = document.createElement("img");
-            imgTag.src = img;
+            imgTag.src = imgSrc;
             imgTag.alt = "Project Screenshot";
+            // The classes below will now be styled by our pure CSS definitions
+            imgTag.className = "rounded-xl shadow-md w-full h-auto max-w-full object-contain";
             imgContainer.appendChild(imgTag);
         });
     }
+</script>
+<!-- Fixed Back Button -->
+<button onclick="goBack()" class="back-button">
+    ⬅️ Back
+</button>
 
+<!-- JavaScript for Back Navigation -->
+<script>
     function goBack() {
         window.history.back();
     }
